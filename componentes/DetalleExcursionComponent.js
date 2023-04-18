@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ScrollView, FlatList} from 'react-native';
 import { Card } from '@rneui/themed';
 import { EXCURSIONES } from '../comun/excursiones';
+import { COMENTARIOS } from '../comun/comentarios';
 import { StyleSheet } from 'react-native';
 
 const estilos = StyleSheet.create({
@@ -30,7 +31,26 @@ const estilos = StyleSheet.create({
         position: 'relative',
     },
 });
+function RenderComentario(props) {
+    const comentarios = props.comentarios;
+    
+    return (
+        <Card>
+        <Card.Title>Comentarios</Card.Title>
+        <Card.Divider/>
+            {comentarios.map((item, index) => (
+                    <>
+                        <Text>{item.comentario}</Text>
+                        <Text>{item.valoracion} Stars</Text>
+                        <Text>--{item.autor}, {item.dia}</Text>
+                        <Text></Text>
 
+                    </>
+                ))}
+        </Card>
+    );
+}
+   
 function RenderExcursion(props) {
 
     const excursion = props.excursion;
@@ -59,13 +79,24 @@ class DetalleExcursion extends Component {
         constructor(props) {
             super(props);
             this.state = {
-                excursiones: EXCURSIONES
+                excursiones: EXCURSIONES,
+                comentarios: COMENTARIOS,
             };
         }
       
         render(){
             const {excursionId} = this.props.route.params;
-            return(<RenderExcursion excursion={this.state.excursiones[+excursionId]} />);
+            return(
+                <ScrollView>
+                <RenderExcursion
+                    excursion={this.state.excursiones[+excursionId]}
+                />
+                <RenderComentario
+                    comentarios={this.state.comentarios.filter((comentario) => comentario.excursionId === excursionId)}
+                />
+                </ScrollView>
+            );
+
         }
 }
 
