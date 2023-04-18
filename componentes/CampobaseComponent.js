@@ -8,6 +8,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './HomeComponent';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Contacto from './ContactoComponent';
+import QuienesSomos from './QuienesSomosComponent';
+
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -55,6 +57,30 @@ function ContactoNavegador() {
  );
 }
 
+function QuienesSomosNavegador() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Quiénes Somos"
+      screenOptions={{
+        headerMode: 'screen',
+        headerTintColor: '#fff',
+        headerStyle: { backgroundColor: '#015afc' },
+        headerTitleStyle: { color: '#fff' },
+      }}
+    >
+
+      <Stack.Screen
+        name="quienessomos"
+        component={QuienesSomos}
+        options={{
+          title: 'Quiénes Somos',
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+
 function DrawerNavegador() {
   return (
     <Drawer.Navigator
@@ -66,7 +92,8 @@ function DrawerNavegador() {
         },
        }}
     >
-    <Drawer.Screen name="Home" component={HomeNavegador} />
+    <Drawer.Screen name="Campo base" component={HomeNavegador} />
+    <Drawer.Screen name="Quiénes Somos" component={QuienesSomosNavegador} />
     <Drawer.Screen name="Calendario" component={CalendarioNavegador} />
     <Drawer.Screen name="Contacto" component={ContactoNavegador} />
     </Drawer.Navigator>
