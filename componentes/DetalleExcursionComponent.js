@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList} from 'react-native';
-import { Card } from '@rneui/themed';
+import { Card, Icon } from '@rneui/themed';
 import { EXCURSIONES } from '../comun/excursiones';
 import { COMENTARIOS } from '../comun/comentarios';
 import { StyleSheet } from 'react-native';
@@ -70,6 +70,16 @@ function RenderExcursion(props) {
                             <Text style={{ margin: 20 }}>
                                 {excursion.descripcion}
                             </Text>
+
+                            <Icon
+                                raised
+                                reverse
+                                name={ props.favorita ? 'heart' : 'heart-o'}
+                                type='font-awesome'
+                                color='#f50'
+                                onPress={() => props.favorita ? console.log('La excursión ya se encuentra entre las favoritas') : props.onPress()}
+                                />
+
                         </View>
                     </Card>
                 )
@@ -84,8 +94,15 @@ class DetalleExcursion extends Component {
             this.state = {
                 excursiones: EXCURSIONES,
                 comentarios: COMENTARIOS,
+                favoritos: [],
             };
         }
+
+        marcarFavorito(excursionId) {
+            this.setState({favoritos: this.state.favoritos.concat(excursionId
+           )});
+        }
+           
       
         render(){
             const {excursionId} = this.props.route.params;
@@ -93,6 +110,9 @@ class DetalleExcursion extends Component {
                 <ScrollView>
                 <RenderExcursion
                     excursion={this.state.excursiones[+excursionId]}
+                    favorita={this.state.favoritos.some(el => el === excursionId)}
+                    onPress={() => this.marcarFavorito(excursionId)}
+                   
                 />
                 <RenderComentario
                     comentarios={this.state.comentarios.filter((comentario) => comentario.excursionId === excursionId)}
