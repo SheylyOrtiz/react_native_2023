@@ -7,7 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './HomeComponent';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
+import Contacto from './ContactoComponent';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -33,10 +33,32 @@ function HomeNavegador() {
  );
 }
 
+function ContactoNavegador() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Contacto"
+      screenOptions={{
+        headerMode: 'screen',
+        headerTintColor: '#fff',
+        headerStyle: { backgroundColor: '#015afc' },
+        headerTitleStyle: { color: '#fff' },
+      }}
+    >
+    <Stack.Screen
+      name="Contacto1"
+      component={Contacto}
+      options={{
+        title: 'Contacto',
+      }}
+    />
+  </Stack.Navigator>
+ );
+}
+
 function DrawerNavegador() {
   return (
     <Drawer.Navigator
-      initialRouteName=" Drawer"
+      initialRouteName="Drawer"
       screenOptions={{
         headerShown: false,
         drawerStyle: {
@@ -46,6 +68,7 @@ function DrawerNavegador() {
     >
     <Drawer.Screen name="Home" component={HomeNavegador} />
     <Drawer.Screen name="Calendario" component={CalendarioNavegador} />
+    <Drawer.Screen name="Contacto" component={ContactoNavegador} />
     </Drawer.Navigator>
   );
 } 
