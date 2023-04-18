@@ -50,6 +50,7 @@ function RenderItem(props) {
                             {item.descripcion}
                         </Text>
                     </View>
+                    
                 </Card>
                 
             );
