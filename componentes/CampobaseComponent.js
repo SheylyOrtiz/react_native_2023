@@ -62,7 +62,7 @@ function CalendarioNavegador() {
       }}
     >
       <Stack.Screen
-        name="Calendario"
+        name="Calendario1"
         component={Calendario}
         options={{
           title: 'Calendario Gaztaroa',
