@@ -36,17 +36,20 @@ function RenderComentario(props) {
     
     return (
         <Card>
-        <Card.Title>Comentarios</Card.Title>
-        <Card.Divider/>
-            {comentarios.map((item, index) => (
-                    <>
-                        <Text>{item.comentario}</Text>
-                        <Text>{item.valoracion} Stars</Text>
-                        <Text>--{item.autor}, {item.dia}</Text>
-                        <Text></Text>
+            <Card.Title>Comentarios</Card.Title>
+            <Card.Divider/>
 
-                    </>
-                ))}
+                {comentarios.map((item, index) => {
+                    return(  
+                        <View key ={index}>
+                            <Text >{item.comentario}</Text>
+                            <Text>{item.valoracion} Stars</Text>
+                            <Text>--{item.autor}, {item.dia}</Text>
+                            <Text></Text>
+                        </View> 
+                        
+                        );
+                     })}
         </Card>
     );
 }
