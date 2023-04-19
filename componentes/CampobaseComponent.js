@@ -10,7 +10,7 @@ import QuienesSomos from './QuienesSomosComponent';
 import { Icon } from '@rneui/themed';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer, DrawerActions } from '@react-navigation/native';
-import { colorGaztaroaClaro } from '../comun/comun';
+import { colorGaztaroaClaro, colorGaztaroaOscuro } from '../comun/comun';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
  flex: 1,
  },
  drawerHeader: {
- backgroundColor: '#015afc',
+ backgroundColor: colorGaztaroaOscuro,
  height: 100,
  alignItems: 'center',
  justifyContent: 'center',
@@ -47,7 +47,7 @@ function CustomDrawerContent(props) {
         horizontal: 'never' }}>
         <View style={styles.drawerHeader}>
           <View style={{flex:1}}>
-            <Image source={require('./imagenes/logo.png')} style={styles.drawerImage} />
+            <Image source={{uri: baseUrl + logo.imagen}} style={styles.drawerImage} />
           </View>
           <View style={{flex: 2}}>
               <Text style={styles.drawerHeaderText}> Gaztaroa</Text>
@@ -67,7 +67,7 @@ function HomeNavegador({navigation}) {
       screenOptions={{
         headerMode: 'screen',
         headerTintColor: '#fff',
-        headerStyle: { backgroundColor: '#015afc' },
+        headerStyle: { backgroundColor: colorGaztaroaOscuro },
         headerTitleStyle: { color: '#fff' },
        headerTitleAlign: 'center',
         headerLeft: () => (<Icon name="menu" size={28} color='white' onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} 
@@ -92,7 +92,7 @@ function ContactoNavegador({navigation}) {
       screenOptions={{
         headerMode: 'screen',
         headerTintColor: '#fff',
-        headerStyle: { backgroundColor: '#015afc' },
+        headerStyle: { backgroundColor: colorGaztaroaOscuro },
         headerTitleStyle: { color: '#fff' },
         headerTitleAlign: 'center',
         headerLeft: () => (<Icon name="menu" size={28} color='white' onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} 
@@ -117,7 +117,7 @@ function QuienesSomosNavegador({navigation}) {
       screenOptions={{
         headerMode: 'screen',
         headerTintColor: '#fff',
-        headerStyle: { backgroundColor: '#015afc' },
+        headerStyle: { backgroundColor: colorGaztaroaOscuro },
         headerTitleStyle: { color: '#fff' },
         headerTitleAlign: 'center',
         headerLeft: () => (<Icon name="menu" size={28} color='white' onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())} 
@@ -209,7 +209,7 @@ function CalendarioNavegador({navigation}) {
       headerMode="float"
       screenOptions={{
         headerTintColor: '#fff',
-        headerStyle: { backgroundColor: '#015afc' },
+        headerStyle: { backgroundColor: colorGaztaroaOscuro },
         headerTitleStyle: { color: '#fff' },
         headerLeft: () => (<Icon name="menu" size={28} color='white' onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
          />),
