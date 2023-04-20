@@ -162,6 +162,19 @@ function DrawerNavegador() {
           )
         }}
       />
+      <Drawer.Screen name="Quiénes Somos" component={QuienesSomosNavegador}
+        options={{
+          drawerIcon: ({ tintColor }) => (
+            <Icon
+              name='info-circle'
+              type='font-awesome'
+              size={24}
+              color={tintColor}
+            />
+          )
+        }}
+      />
+
       <Drawer.Screen name="Calendario" component={CalendarioNavegador}
         options={{
           drawerIcon: ({ tintColor }) => (
@@ -186,19 +199,7 @@ function DrawerNavegador() {
           )
         }}
       />
-      <Drawer.Screen name="Quiénes Somos" component={QuienesSomosNavegador}
-        options={{
-          drawerIcon: ({ tintColor }) => (
-            <Icon
-              name='info-circle'
-              type='font-awesome'
-              size={24}
-              color={tintColor}
-            />
-          )
-        }}
-      />
-
+      
     </Drawer.Navigator>
   );
 }
