@@ -3,7 +3,7 @@ import { Card } from '@rneui/themed';
 import { Text, ScrollView, FlatList, SafeAreaView } from 'react-native';
 import { ACTIVIDADES } from '../comun/actividades';
 import { ListItem, Avatar } from '@rneui/themed';
-
+import { baseUrl } from '../comun/comun';
 function Historia() {
 
     return (
@@ -35,7 +35,7 @@ class QuienesSomos extends Component {
                 <ListItem
                     key={index}
                     bottomDivider>
-                    <Avatar source={require('./imagenes/40Años.png')} />
+                    <Avatar source={{uri: baseUrl + item.imagen}} />
                     <ListItem.Content>
                         <ListItem.Title>{item.nombre}{"\n"}{"\n"}</ListItem.Title>
                         <ListItem.Subtitle>{item.descripcion}</ListItem.Subtitle>

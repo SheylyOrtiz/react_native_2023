@@ -12,7 +12,7 @@ const estilos = StyleSheet.create({
         resizeMode: 'cover',
     },
     title: {
-        color: 'chocolate',
+        color: 'white',
         padding: 10,
         fontSize: 20,
         position: 'absolute',

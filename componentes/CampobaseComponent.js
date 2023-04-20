@@ -12,6 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer, DrawerActions } from '@react-navigation/native';
 import { colorGaztaroaClaro, colorGaztaroaOscuro } from '../comun/comun';
 
+
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -47,7 +48,7 @@ function CustomDrawerContent(props) {
         horizontal: 'never' }}>
         <View style={styles.drawerHeader}>
           <View style={{flex:1}}>
-            <Image source={{uri: baseUrl + logo.imagen}} style={styles.drawerImage} />
+          <Image source={require('./imagenes/logo.png')} style={styles.drawerImage} />
           </View>
           <View style={{flex: 2}}>
               <Text style={styles.drawerHeaderText}> Gaztaroa</Text>
