@@ -60,7 +60,7 @@ function RenderComentario(props) {
         </Card>
     );
 }
-   
+
 function RenderExcursion(props) {
 
     const excursion = props.excursion;
