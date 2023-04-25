@@ -12,12 +12,7 @@ const mapStateToProps = state => {
    
 
 class Calendario extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            excursiones: EXCURSIONES
-        };
-    }
+    
 
     render(){
 

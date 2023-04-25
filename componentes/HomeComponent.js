@@ -8,12 +8,11 @@ import { baseUrl } from '../comun/comun';
 
 const mapStateToProps = state => {
     return {
-    actividades: state.actividades,
-    excursiones: state.excursiones,
-    cabeceras: state.cabeceras,
+        actividades: state.actividades,
+        excursiones: state.excursiones,
+        cabeceras: state.cabeceras
     }
 }
-
 const estilos = StyleSheet.create({
     image: {
         width: '100%',
@@ -21,7 +20,7 @@ const estilos = StyleSheet.create({
         resizeMode: 'cover',
     },
     title: {
-        color: 'white',
+        color: 'chocolate',
         padding: 10,
         fontSize: 20,
         position: 'absolute',
@@ -71,15 +70,15 @@ function RenderItem(props) {
 class Home extends Component {
    
     render() {
-        
+       
         return(
             <ScrollView>
                 <RenderItem item={this.props.cabeceras.cabeceras.filter((cabecera) => cabecera.destacado)[0]} />
                 <RenderItem item={this.props.excursiones.excursiones.filter((excursion) => excursion.destacado)[0]} />
-                <RenderItem item={this.props.actividades.excursiones.filter((actividad) => actividad.destacado)[0]} />
+                <RenderItem item={this.props.actividades.actividades.filter((actividad) => actividad.destacado)[0]} />
             </ScrollView>
         );
     }
 }
 
-export default connect (mapStateToProps)(Home);
+export default connect(mapStateToProps)(Home);

@@ -3,12 +3,12 @@ import { Text, View, ScrollView, FlatList} from 'react-native';
 import { Card, Icon } from '@rneui/themed';
 import { connect } from 'react-redux';
 import { StyleSheet } from 'react-native';
-
+import { baseUrl } from '../comun/comun';
 
 const mapStateToProps = state => {
     return {
     excursiones: state.excursiones,
-    comentarios: state.comentarios,
+    comentarios: state.comentarios
     }
     }
 
@@ -70,7 +70,7 @@ function RenderExcursion(props) {
                     <Card containerStyle={estilos.card} >
                         <View style={estilos.imageContainer}>
                             <Card.Image
-                                source={require('./imagenes/40Años.png')}
+                                source={{uri: baseUrl + excursion.imagen}}
                                 style={estilos.image}
                             ></Card.Image>
                             <Text style={estilos.title}>{excursion.nombre}</Text>
@@ -79,7 +79,7 @@ function RenderExcursion(props) {
                             </Text>
 
                             <Icon
-                                raised
+                                
                                 reverse
                                 name={ props.favorita ? 'heart' : 'heart-o'}
                                 type='font-awesome'
@@ -104,8 +104,7 @@ class DetalleExcursion extends Component {
         }
 
         marcarFavorito(excursionId) {
-            this.setState({favoritos: this.state.favoritos.concat(excursionId
-           )});
+            this.setState({favoritos: this.state.favoritos.concat(excursionId)});
         }
            
       
