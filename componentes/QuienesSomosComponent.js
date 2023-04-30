@@ -44,25 +44,49 @@ class QuienesSomos extends Component {
                 </ListItem>
             );
         };
-
-        return (
+        
+        if (this.props.actividades.isLoading) {
+            return(
             <ScrollView>
                 <Historia />
-                <SafeAreaView>
-                    <Card>
-                        <Card.Title>Actividades y recursos</Card.Title>
-                        <Card.Divider />
-                        <FlatList
-                            scrollEnabled={false}
-                            data={this.props.actividades.actividades}
-                            renderItem={renderQuienesSomosItem}
-                            keyExtractor={item => item.id.toString()}
-                        />
-                    </Card >
-                </SafeAreaView>
+                <Card>
+                    <Card.Title>"Actividades y recursos"</Card.Title>
+                    <Card.Divider/>
+                    <IndicadorActividad />
+                </Card>
             </ScrollView>
-        );
-    }
+            );
+        } 
+        else if (this.props.actividades.errMess){
+            return(
+                <View>
+                    <Text>{this.props.actividades.errMess}</Text>
+                </View>
+
+            )
+        }
+
+        else {
+            return (
+                <ScrollView>
+                    <Historia />
+                    <SafeAreaView>
+                        <Card>
+                            <Card.Title>Actividades y recursos</Card.Title>
+                            <Card.Divider />
+                            <FlatList
+                                scrollEnabled={false}
+                                data={this.props.actividades.actividades}
+                                renderItem={renderQuienesSomosItem}
+                                keyExtractor={item => item.id.toString()}
+                            />
+                        </Card >
+                    </SafeAreaView>
+                </ScrollView>
+            );
+        }
+    } 
 }
+
 
 export default connect(mapStateToProps)(QuienesSomos);

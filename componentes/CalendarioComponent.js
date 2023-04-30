@@ -33,15 +33,35 @@ class Calendario extends Component {
             );
         };
 
-        return (
+        //const {isLoading}= this.props.excursiones.isLoading
+        //const {errMess} = this.props.excursiones.errMess
+
+        if (this.props.excursiones.isLoading) {
+            return(
+                <IndicadorActividad />
+            );
+        }
+        else if (this.props.excursiones.errMess){
+            return(
+                <View>
+                    <Text>{props.errMess}</Text>
+                </View>
+            );
+        }
+
+        else {
+            return(
             <SafeAreaView>
+                
                 <FlatList 
                     data={this.props.excursiones.excursiones}
-                    renderItem={renderCalendarioItem}
+                    renderItem={renderCalendarioItem} 
                     keyExtractor={item => item.id.toString()}
+
                 />
             </SafeAreaView>
-        );
+             );
+        }
     }
 }
 
