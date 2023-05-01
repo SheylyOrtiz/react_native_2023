@@ -2,9 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Campobase from './componentes/CampobaseComponent';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+//import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { ConfigureStore } from './redux/configureStore';
+import { registerRootComponent } from 'expo';
 
 const store = ConfigureStore();
 export default function App() {
@@ -22,4 +23,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+registerRootComponent(App);
  
