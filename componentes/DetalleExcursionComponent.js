@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, FlatList} from 'react-native';
+import { Text, View, ScrollView, Container} from 'react-native';
 import { Card, Icon } from '@rneui/themed';
 import { connect } from 'react-redux';
 import { StyleSheet } from 'react-native';
@@ -83,16 +83,23 @@ function RenderExcursion(props) {
                             <Text style={{ margin: 20 }}>
                                 {excursion.descripcion}
                             </Text>
-
+                     
                             <Icon
-                                
                                 reverse
                                 name={ props.favorita ? 'heart' : 'heart-o'}
                                 type='font-awesome'
                                 color='#f50'
                                 onPress={() => props.favorita ? console.log('La excursión ya se encuentra entre las favoritas') : props.onPress()}
-                                />
-
+                            />
+                            <Icon
+                                
+                                reverse
+                                name= 'pencil'
+                                type='font-awesome'
+                                color='#84b6f4'
+                                //onPress={() => props.favorita ? console.log('La excursión ya se encuentra entre las favoritas') : props.onPress()}
+                            />
+                      
                         </View>
                     </Card>
                 )
