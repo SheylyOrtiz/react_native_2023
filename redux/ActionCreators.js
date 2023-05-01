@@ -31,6 +31,11 @@ export const addComentarios = (comentarios) => ({
     payload: comentarios
 });
 
+export const addComentarioModal = (comentarios) => ({
+    type: ActionTypes.ADD_COMENTARIO_MODAL,
+    payload: comentarios
+})
+
 export const fetchExcursiones = () => (dispatch) => {
 
     dispatch(excursionesLoading());
