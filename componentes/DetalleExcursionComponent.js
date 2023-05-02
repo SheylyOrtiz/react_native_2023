@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 import { baseUrl } from '../comun/comun';
 import { postFavorito } from '../redux/ActionCreators';
 import {Alert, Modal, Pressable} from 'react-native';
-
+import { Rating, AirbnbRating } from 'react-native-ratings';
 const mapStateToProps = state => {
     return {
     excursiones: state.excursiones,
@@ -117,6 +117,15 @@ function RenderExcursion(props) {
             } else {
                     return(<View></View>);
                 }
+}
+function RenderModalForm(props) {
+
+  return( 
+    <Modal>
+
+    </Modal>
+
+  )
 }
 
 class DetalleExcursion extends Component {
