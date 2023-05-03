@@ -7,6 +7,7 @@ import { baseUrl } from '../comun/comun';
 import { postFavorito } from '../redux/ActionCreators';
 import {Alert, Modal, Pressable} from 'react-native';
 import { Rating, AirbnbRating } from 'react-native-ratings';
+import { Input } from 'react-native-elements';
 const mapStateToProps = state => {
     return {
     excursiones: state.excursiones,
@@ -121,9 +122,45 @@ function RenderExcursion(props) {
 function RenderModalForm(props) {
 
   return( 
+    <View>
     <Modal>
-
+        <View>
+        <Rating
+            type='star'
+            //ratingImage={WATER_IMAGE}
+            ratingColor='#3498db'
+            ratingBackgroundColor='#c8c7c8'
+            ratingCount={5}
+            imageSize={30}
+            jumpValue={1}
+            startingValue={3}
+            onFinishRating={this.ratingCompleted}
+            style={{ paddingVertical: 10 }}
+        />
+        <Input
+            placeholder='Autor'
+            leftIcon={{ type: 'font-awesome', 
+                name: 'user' }}
+        />
+        <Input
+            placeholder='Comentario'
+            leftIcon={{ type: 'font-awesome', 
+                name: 'comment' }}
+        />
+        <Pressable
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text>Hide Modal</Text>
+        </Pressable>
+        <Pressable
+            style={[styles.button, styles.buttonOpen]}
+            onPress={() => setModalVisible(true)}>
+            <Text>Show Modal</Text>
+        </Pressable>
+        </View>
     </Modal>
+    
+   </View>
 
   )
 }
