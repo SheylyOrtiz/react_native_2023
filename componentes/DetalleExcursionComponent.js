@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 import { baseUrl } from '../comun/comun';
 import { postFavorito } from '../redux/ActionCreators';
 import {Alert, Modal, Pressable} from 'react-native';
-import { Rating, AirbnbRating } from 'react-native-ratings';
+import { Rating } from 'react-native-ratings';
 import { Input } from 'react-native-elements';
 const mapStateToProps = state => {
     return {
@@ -123,7 +123,10 @@ function RenderModalForm(props) {
 
   return( 
     <View>
-    <Modal>
+    <Modal 
+    animationType = {"slide"}
+    visible = {}
+    >
         <View>
         <Rating
             type='star'
@@ -150,12 +153,12 @@ function RenderModalForm(props) {
         <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}>
-              <Text>Hide Modal</Text>
+              <Text>ENVIAR</Text>
         </Pressable>
         <Pressable
             style={[styles.button, styles.buttonOpen]}
-            onPress={() => setModalVisible(true)}>
-            <Text>Show Modal</Text>
+            onPress={() => setModalVisible(!modalVisible)}>
+            <Text>CANCELAR</Text>
         </Pressable>
         </View>
     </Modal>
@@ -170,6 +173,9 @@ class DetalleExcursion extends Component {
         marcarFavorito(excursionId) {
             this.props.postFavorito(excursionId);
         }
+        hacerComentario(){
+
+        }
            
         render(){
             
@@ -180,7 +186,7 @@ class DetalleExcursion extends Component {
                     excursion={this.props.excursiones.excursiones[+excursionId]}
                     favorita={this.props.favoritos.favoritos.some(el => el === excursionId)}
                     onPress={() => this.marcarFavorito(excursionId)}
-                  
+                    onPressComentario = {()=> this.hacerComentario(excursionId)}
                 />
                 <RenderComentario
                     comentarios={this.props.comentarios.comentarios.filter((comentario) => comentario.excursionId === excursionId)}
