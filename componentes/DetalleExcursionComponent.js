@@ -74,59 +74,66 @@ function RenderComentario(props) {
     );
 }
 function RenderModalForm(props) {
-  
+    //const { visible} = props.visible;
+
+    // const handlePress = () => {
+    //     setModalVisible(!visible);
+    // };
+    const ratingCompleted = (rating) => {
+        console.log('Rating is: ' + rating);
+      };
     return( 
-      <View>
       <Modal 
       animationType = {"slide"}
-      visible={props.visible}
+      visible = {props.visible}
       //onRequestClose={() => cerrarModal()}
       >
           <View>
-          <Rating
-              type='star'
-              //ratingImage={WATER_IMAGE}
-              ratingColor='#3498db'
-              ratingBackgroundColor='#c8c7c8'
-              ratingCount={5}
-              imageSize={30}
-              jumpValue={1}
-              startingValue={3}
-              onFinishRating={this.ratingCompleted}
-              style={{ paddingVertical: 10 }}
-          />
-          <Input
-              placeholder='Autor'
-              leftIcon={{ type: 'font-awesome', 
-                  name: 'user' }}
-          />
-          <Input
-              placeholder='Comentario'
-              leftIcon={{ type: 'font-awesome', 
-                  name: 'comment' }}
-          />
-          <Pressable
-                //style={[styles.button, styles.buttonClose]}
-                onPress={props.setModalVisible(false)}>
-                <Text>ENVIAR</Text>
-          </Pressable>
-          <Pressable
-              
-              //style={[styles.button, styles.buttonOpen]}
-              onPress={props.setModalVisible(false)}>
-              <Text>CANCELAR</Text>
-          </Pressable>
+            <Rating
+                type='star'
+                //ratingImage={WATER_IMAGE}
+                ratingColor='#3498db'
+                ratingBackgroundColor='#c8c7c8'
+                ratingCount={5}
+                imageSize={30}
+                jumpValue={1}
+                startingValue={3}
+                onFinishRating={ratingCompleted}
+                style={{ paddingVertical: 10 }}
+            />
+            <Input
+                placeholder='Autor'
+                leftIcon={{ type: 'font-awesome', 
+                    name: 'user' }}
+            />
+            <Input
+                placeholder='Comentario'
+                leftIcon={{ type: 'font-awesome', 
+                    name: 'comment' }}
+            />
+            <Pressable
+                    //style={[styles.button, styles.buttonClose]}
+                    onPress={() => props.setModalVisible()}>
+                    <Text>ENVIAR</Text>
+            </Pressable>
+            <Pressable
+                
+                //style={[styles.button, styles.buttonOpen]}
+                onPress={() => props.setModalVisible()}>
+                <Text>CANCELAR</Text>
+            </Pressable>
           </View>
       </Modal>
-      
-     </View>
   
     )
   }
 function RenderExcursion(props) {
- 
+    // const { visible, setModalVisible } = props;
+    // const handlePress = () => {
+    //     setModalVisible(!visible);
+    // };
     const excursion = props.excursion;
-    
+     
 
             if (excursion != null) {
                 return (
@@ -154,7 +161,7 @@ function RenderExcursion(props) {
                                 name= 'pencil'
                                 type='font-awesome'
                                 color='#84b6f4'
-                                onPress={() => props.onPressComentario(true)}
+                                onPress={() => props.onPressComentario()}
                                 
                             />
                         </View>
@@ -174,29 +181,34 @@ class DetalleExcursion extends Component {
     constructor(props) {
         super(props);
         this.state = {
-        visible: false,
+        modalVisible: false,
     }};
     marcarFavorito(excursionId) {
         this.props.postFavorito(excursionId);
     }
-    setModalVisible(visible) {
-        this.setState({ visible: visible });
+    setModalVisible() {
+        this.setState({modalVisible : !this.state.modalVisible});
     } 
     
     render(){
-        const {modalVisible} = this.state.visible;
+        const {modalVisible} = this.state;
         const {excursionId} = this.props.route.params;
+        //const { showModal } = this.state;
         return(
             <ScrollView>
             <RenderModalForm
                 visible = {modalVisible}
-                onPress={() => this.setModalVisible(modalVisible)}
+                setModalVisible = {()=>this.setModalVisible()}
+                //onPress={() => this.setModalVisible(visible)}
             />
             <RenderExcursion
                 excursion={this.props.excursiones.excursiones[+excursionId]}
                 favorita={this.props.favoritos.favoritos.some(el => el === excursionId)}
                 onPress={() => this.marcarFavorito(excursionId)}
-                onPressComentario = {()=> this.setModalVisible(modalVisible)}
+                //visible = {visible}
+                onPressComentario = {() =>this.setModalVisible()}
+                //onPressCancelModal = { () => this.setModalVisible(false)}
+                //onPressFavorite={() => this.markFavorite(tripId)}
                 
             />
             <RenderComentario
