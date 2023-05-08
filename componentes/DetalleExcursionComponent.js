@@ -37,6 +37,13 @@ const estilos = StyleSheet.create({
         flexDirection: 'row', 
         alingItems: 'center', 
         justifyContent: 'center'
+    },
+    botonModal: {
+        flexDirection: 'column',
+        alingItems: 'center', 
+        justifyContent: 'center',
+        backgroundColor: '#3498db'
+
     }
 });
 const mapStateToProps = state => {
@@ -84,11 +91,11 @@ function RenderModalForm(props) {
       };
     return( 
       <Modal 
+      
       animationType = {"slide"}
       visible = {props.visible}
-      //onRequestClose={() => cerrarModal()}
       >
-          <View>
+          <View style = {{paddingTop: 100, paddingLeft: 30, paddingRight: 30}}>
             <Rating
                 type='star'
                 //ratingImage={WATER_IMAGE}
@@ -111,13 +118,14 @@ function RenderModalForm(props) {
                 leftIcon={{ type: 'font-awesome', 
                     name: 'comment' }}
             />
-            <Pressable
+            <Pressable 
+                    style={estilos.botonModal}
                     //style={[styles.button, styles.buttonClose]}
                     onPress={() => props.setModalVisible()}>
                     <Text>ENVIAR</Text>
             </Pressable>
             <Pressable
-                
+                style={estilos.botonModal}
                 //style={[styles.button, styles.buttonOpen]}
                 onPress={() => props.setModalVisible()}>
                 <Text>CANCELAR</Text>
