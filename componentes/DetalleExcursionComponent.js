@@ -97,10 +97,6 @@ function RenderComentario(props) {
 }
 function RenderModalForm(props) {
 
-    // ratingCompleted = (rating) => {
-    //     console.log('Rating is: ' + rating);
-    // };
-
     return( 
       <Modal 
       visible = {props.visible}
@@ -220,7 +216,7 @@ class DetalleExcursion extends Component {
             valoracion: 3,
             autor: '',
             comentario: '',
-            //dia: '',
+            dia: '',
             }
         );
     }
@@ -231,20 +227,22 @@ class DetalleExcursion extends Component {
         if (valoracion) this.setState({valoracion: valoracion}); 
 
     }
+    //generamos el comentario aquí con todos los parametros para solo
+    //enviar un unico parámetro a postComentario()
     generateComentario (excursionId) {
         this.props.postComentario({
             excursionId : excursionId,
             rating: this.state.valoracion,
             author: this.state.autor,
             comment: this.state.comentario,
-            day: (new Date()).toISOString()
+            day : (new Date()).toISOString()
         });
+        this.resetForm();
     }
     
     render(){
         const {showModal} = this.state;
         const {excursionId} = this.props.route.params;
-        //const { showModal } = this.state;
         return(
             <ScrollView>
             <RenderModalForm
