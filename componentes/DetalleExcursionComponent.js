@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { StyleSheet } from 'react-native';
 import { baseUrl } from '../comun/comun';
 import { postFavorito } from '../redux/ActionCreators';
+import { postComentario } from '../redux/ActionCreators';
 import {Alert, Modal, Pressable} from 'react-native';
 import { Rating } from 'react-native-ratings';
 import { Input } from 'react-native-elements';
@@ -68,7 +69,8 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    postFavorito: (excursionId) => dispatch(postFavorito(excursionId))
+    postFavorito: (excursionId) => dispatch(postFavorito(excursionId)),
+    postComentario: (comentario) => dispatch(postComentario(comentario)),
 })
    
 function RenderComentario(props) {
@@ -94,55 +96,51 @@ function RenderComentario(props) {
     );
 }
 function RenderModalForm(props) {
-    //const { visible} = props.visible;
 
-    // const handlePress = () => {
-    //     setModalVisible(!visible);
+    // ratingCompleted = (rating) => {
+    //     console.log('Rating is: ' + rating);
     // };
-    ratingCompleted = (rating) => {
-        console.log('Rating is: ' + rating);
-    };
 
     return( 
       <Modal 
-      
-      animationType = {"slide"}
       visible = {props.visible}
       >
           <View style={estilos.vista}>
             <Rating
                 showRating
                 type='star'
-                //ratingImage={WATER_IMAGE}
                 ratingColor='#3498db'
                 ratingBackgroundColor='#c8c7c8'
                 ratingCount={5}
                 imageSize={30}
                 jumpValue={1}
                 startingValue={3}
-                onFinishRating={this.ratingCompleted}
+                onFinishRating={(rating) => props.onClickInput({valoracion: rating})}
                 style={{ paddingVertical: 10 }}
             />
             <Input
                 placeholder='Autor'
                 leftIcon={{ type: 'font-awesome', 
                     name: 'user' }}
+                //onChangeText={value => this.setState({ comment: value })}
+                onChangeText={author => props.onClickInput({ autor: author })}
             />
             <Input
                 
                 placeholder='Comentario'
                 leftIcon={{ type: 'font-awesome', 
                     name: 'comment' }}
-            />
+                onChangeText={comment => props.onClickInput({ comentario: comment })}
+            /> 
             <Pressable 
                     style={estilos.botonModal}
-                    onPress={() => props.setModalVisible()}>
+                    onPress={() => props.onClickEnviar()}>
                     <Text style={estilos.textoBotonModal}>ENVIAR</Text>
             </Pressable>
             <Pressable
                 style={estilos.botonModal}
                 //style={[styles.button, styles.buttonOpen]}
-                onPress={() => props.setModalVisible()}>
+                onPress={() => props.onClickCancelar()}>
                 <Text style={estilos.textoBotonModal}>CANCELAR</Text>
             </Pressable>
           </View>
@@ -204,35 +202,69 @@ class DetalleExcursion extends Component {
     constructor(props) {
         super(props);
         this.state = {
-        modalVisible: false,
+        showModal: false,
+        valoracion: 3,
+        autor: '',
+        comentario: '',
+
     }};
     marcarFavorito(excursionId) {
         this.props.postFavorito(excursionId);
     }
-    setModalVisible() {
-        this.setState({modalVisible : !this.state.modalVisible});
+    toggleModal() {
+        this.setState({showModal : !this.state.showModal});
     } 
+    resetForm() {
+        this.setState({
+            showModal: false,
+            valoracion: 3,
+            autor: '',
+            comentario: '',
+            //dia: '',
+            }
+        );
+    }
+    setCommentAut = (commentAut) => {
+        const {comentario, autor, valoracion} = commentAut;
+        if (comentario) this.setState({comentario: comentario});
+        if (autor) this.setState({autor: autor});
+        if (valoracion) this.setState({valoracion: valoracion}); 
+
+    }
+    generateComentario (excursionId) {
+        this.props.postComentario({
+            excursionId : excursionId,
+            rating: this.state.valoracion,
+            author: this.state.autor,
+            comment: this.state.comentario,
+            day: (new Date()).toISOString()
+        });
+    }
     
     render(){
-        const {modalVisible} = this.state;
+        const {showModal} = this.state;
         const {excursionId} = this.props.route.params;
         //const { showModal } = this.state;
         return(
             <ScrollView>
             <RenderModalForm
-                visible = {modalVisible}
-                setModalVisible = {()=>this.setModalVisible()}
-                //onPress={() => this.setModalVisible(visible)}
+                visible = {showModal}
+                onClickEnviar = {() => {
+                    this.generateComentario(excursionId);
+                    this.toggleModal();
+                }}
+                onClickCancelar = {() => {
+                    this.toggleModal();
+                    this.resetForm()
+                }} 
+                onClickInput = {this.setCommentAut}
             />
             <RenderExcursion
                 excursion={this.props.excursiones.excursiones[+excursionId]}
                 favorita={this.props.favoritos.favoritos.some(el => el === excursionId)}
                 onPress={() => this.marcarFavorito(excursionId)}
-                //visible = {visible}
-                onPressComentario = {() =>this.setModalVisible()}
-                //onPressCancelModal = { () => this.setModalVisible(false)}
-                //onPressFavorite={() => this.markFavorite(tripId)}
-                
+                onPressComentario = {() =>this.toggleModal()}
+                 
             />
             <RenderComentario
                 comentarios={this.props.comentarios.comentarios.filter((comentario) => comentario.excursionId === excursionId)}

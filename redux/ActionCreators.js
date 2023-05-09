@@ -31,11 +31,6 @@ export const addComentarios = (comentarios) => ({
     payload: comentarios
 });
 
-export const addComentarioModal = (comentarios) => ({
-    type: ActionTypes.ADD_COMENTARIO_MODAL,
-    payload: comentarios
-})
-
 export const fetchExcursiones = () => (dispatch) => {
 
     dispatch(excursionesLoading());
@@ -150,9 +145,19 @@ export const postFavorito = (excursionId) => (dispatch) => {
     setTimeout(() => {
         dispatch(addFavorito(excursionId));
     }, 2000);
-   };
+};
 export const addFavorito = (excursionId) => ({
     type: ActionTypes.ADD_FAVORITO,
     payload: excursionId
+});
+export const postComentario = (comentario) => (dispatch) => {
+    setTimeout(() => {
+        dispatch(addComentario(comentario));
+    }, 2000);
+};
+
+export const addComentario = (comentario) => ({
+    type: ActionTypes.ADD_COMENTARIO,
+    payload: comentario
 });
    
