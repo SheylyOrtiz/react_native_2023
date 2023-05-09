@@ -38,12 +38,25 @@ const estilos = StyleSheet.create({
         alingItems: 'center', 
         justifyContent: 'center'
     },
+    vista: {
+        paddingTop: 100,
+        paddingLeft: 30, 
+        paddingRight: 30,
+    }, 
     botonModal: {
-        flexDirection: 'column',
-        alingItems: 'center', 
-        justifyContent: 'center',
-        backgroundColor: '#3498db'
+        alignSelf: 'center',
+        backgroundColor: '#272727',
+        padding: '2%',
+        marginBottom: '5%',
+        borderRadius: '20%',
+        maxWidth: '45%',
+        
+        
 
+    },
+    textoBotonModal: {
+        textAlign: 'center',
+        color: 'white'
     }
 });
 const mapStateToProps = state => {
@@ -86,17 +99,19 @@ function RenderModalForm(props) {
     // const handlePress = () => {
     //     setModalVisible(!visible);
     // };
-    const ratingCompleted = (rating) => {
+    ratingCompleted = (rating) => {
         console.log('Rating is: ' + rating);
-      };
+    };
+
     return( 
       <Modal 
       
       animationType = {"slide"}
       visible = {props.visible}
       >
-          <View style = {{paddingTop: 100, paddingLeft: 30, paddingRight: 30}}>
+          <View style={estilos.vista}>
             <Rating
+                showRating
                 type='star'
                 //ratingImage={WATER_IMAGE}
                 ratingColor='#3498db'
@@ -105,7 +120,7 @@ function RenderModalForm(props) {
                 imageSize={30}
                 jumpValue={1}
                 startingValue={3}
-                onFinishRating={ratingCompleted}
+                onFinishRating={this.ratingCompleted}
                 style={{ paddingVertical: 10 }}
             />
             <Input
@@ -114,21 +129,21 @@ function RenderModalForm(props) {
                     name: 'user' }}
             />
             <Input
+                
                 placeholder='Comentario'
                 leftIcon={{ type: 'font-awesome', 
                     name: 'comment' }}
             />
             <Pressable 
                     style={estilos.botonModal}
-                    //style={[styles.button, styles.buttonClose]}
                     onPress={() => props.setModalVisible()}>
-                    <Text>ENVIAR</Text>
+                    <Text style={estilos.textoBotonModal}>ENVIAR</Text>
             </Pressable>
             <Pressable
                 style={estilos.botonModal}
                 //style={[styles.button, styles.buttonOpen]}
                 onPress={() => props.setModalVisible()}>
-                <Text>CANCELAR</Text>
+                <Text style={estilos.textoBotonModal}>CANCELAR</Text>
             </Pressable>
           </View>
       </Modal>
