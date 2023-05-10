@@ -221,6 +221,7 @@ class DetalleExcursion extends Component {
         );
     }
     setCommentAut = (commentAut) => {
+        console.log(this.state)
         const {comentario, autor, valoracion} = commentAut;
         if (comentario) this.setState({comentario: comentario});
         if (autor) this.setState({autor: autor});
@@ -232,10 +233,10 @@ class DetalleExcursion extends Component {
     generateComentario (excursionId) {
         this.props.postComentario({
             excursionId : excursionId,
-            rating: this.state.valoracion,
-            author: this.state.autor,
-            comment: this.state.comentario,
-            day : (new Date()).toISOString()
+            valoracion: this.state.valoracion,
+            autor: this.state.autor,
+            comentario: this.state.comentario,
+            dia : (new Date()).toISOString()
         });
         this.resetForm();
     }
