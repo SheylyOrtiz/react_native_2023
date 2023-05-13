@@ -9,8 +9,14 @@ export const comentarios = (state = { errMess: null, comentarios:[]}, action) =>
       return {...state, errMess: action.payload};
     //nos falta asignar el id al comentario
     case ActionTypes.ADD_COMENTARIO:
-      console.log(action.payload)
-      return {...state, errMess: null, comentarios: state.comentarios.concat(action.payload)}
+      const newComment = { ...action.payload, id: state.comentarios.length};
+      return {
+        ...state,
+        errMess: null,
+        comentarios: [...state.comentarios, newComment],
+        
+      };
+      // return {...state, errMess: null, comentarios: state.comentarios.concat(action.payload)}
 
     default:
     return state;

@@ -87,7 +87,7 @@ function RenderComentario(props) {
                             <Text >{item.comentario}</Text>
                             <Text>{item.valoracion} Stars</Text>
                             <Text>--{item.autor}, {item.dia}</Text>
-                            <Text></Text>
+                            <Text>{item.id}</Text>
                         </View> 
                         
                         );
@@ -221,7 +221,7 @@ class DetalleExcursion extends Component {
         );
     }
     setCommentAut = (commentAut) => {
-        console.log(this.state)
+        //console.log(this.state)
         const {comentario, autor, valoracion} = commentAut;
         if (comentario) this.setState({comentario: comentario});
         if (autor) this.setState({autor: autor});
