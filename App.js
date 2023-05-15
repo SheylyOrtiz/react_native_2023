@@ -6,6 +6,8 @@ import Campobase from './componentes/CampobaseComponent';
 import { Provider } from 'react-redux';
 import { ConfigureStore } from './redux/configureStore';
 import { registerRootComponent } from 'expo';
+//import * as firebase from 'firebase';
+import {firebase } from './firebaseConfig';
 
 const store = ConfigureStore();
 export default function App() {

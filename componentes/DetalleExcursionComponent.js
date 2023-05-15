@@ -87,7 +87,7 @@ function RenderComentario(props) {
                             <Text >{item.comentario}</Text>
                             <Text>{item.valoracion} Stars</Text>
                             <Text>--{item.autor}, {item.dia}</Text>
-                            <Text>{item.id}</Text>
+                            <Text></Text>
                         </View> 
                         
                         );

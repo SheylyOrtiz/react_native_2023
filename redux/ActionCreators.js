@@ -1,26 +1,41 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../comun/comun';
+import app from '../firebaseConfig';
+import 'firebase/database';
+import { getDatabase, ref, onValue } from "firebase/database";
 
+
+// export const fetchComentarios = () => (dispatch) => {
+//     return fetch(baseUrl + 'comentarios')
+//     .then(response => {
+//         if (response.ok) {
+//           return response;
+//         } else {
+//           var error = new Error('Error ' + response.status + ': ' + response.statusText);
+//           error.response = response;
+//           throw error;
+//         }
+//       },
+//       error => {
+//             var errmess = new Error(error.message);
+//             throw errmess;
+//       })
+//     .then(response => response.json())
+//     .then(comentarios => dispatch(addComentarios(comentarios)))
+//     .catch(error => dispatch(comenrtariosFailed(error.message)));
+// };
 export const fetchComentarios = () => (dispatch) => {
-    return fetch(baseUrl + 'comentarios')
-    .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          var error = new Error('Error ' + response.status + ': ' + response.statusText);
-          error.response = response;
-          throw error;
-        }
-      },
-      error => {
-            var errmess = new Error(error.message);
-            throw errmess;
-      })
-    .then(response => response.json())
-    .then(comentarios => dispatch(addComentarios(comentarios)))
-    .catch(error => dispatch(comentariosFailed(error.message)));
-};
-
+    const database = getDatabase(app);
+    const comentariosRef = ref(database, "comentarios");
+  
+    // Suscribirse a los cambios de los datos en tiempo real
+    onValue(comentariosRef, (snapshot) => {
+      const comentarios = snapshot.val();
+      dispatch(addComentarios(comentarios));
+    }, (error) => {
+      dispatch(comentariosFailed(error.message));
+    });
+  };
 export const comentariosFailed = (errmess) => ({
     type: ActionTypes.COMENTARIOS_FAILED,
     payload: errmess
