@@ -13,7 +13,7 @@ import { NavigationContainer, DrawerActions } from '@react-navigation/native';
 import { colorGaztaroaClaro, colorGaztaroaOscuro } from '../comun/comun'
 
 import { connect } from 'react-redux';
-import { fetchExcursiones, fetchComentarios, fetchCabeceras, fetchActividades } from '../redux/ActionCreators';
+import { fetchExcursiones, fetchComentarios, fetchCabeceras, fetchActividades, postComentario } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
   return {
@@ -29,6 +29,7 @@ const mapDispatchToProps = dispatch => ({
   fetchComentarios: () => dispatch(fetchComentarios()),
   fetchCabeceras: () => dispatch(fetchCabeceras()),
   fetchActividades: () => dispatch(fetchActividades()),
+  postComentario: () => dispatch(postComentario()),
 })
  
 const Stack = createNativeStackNavigator();
@@ -154,7 +155,36 @@ function QuienesSomosNavegador({navigation}) {
     </Stack.Navigator>
   );
 }
-
+function CalendarioNavegador({navigation}) {
+  return (
+    <Stack.Navigator
+      initialRouteName="Calendario"
+      headerMode="float"
+      screenOptions={{
+        headerTintColor: '#fff',
+        headerStyle: { backgroundColor: colorGaztaroaOscuro },
+        headerTitleStyle: { color: '#fff' },
+        headerLeft: () => (<Icon name="menu" size={28} color='white' onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+         />),
+      }}
+    >
+      <Stack.Screen
+        name="Calendario1"
+        component={Calendario}
+        options={{
+          title: 'Calendario Gaztaroa',
+        }}
+      />
+      <Stack.Screen
+        name="DetalleExcursion"
+        component={DetalleExcursion}
+        options={{
+          title: 'Detalle Excursión',
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
 
 function DrawerNavegador() {
   return (
@@ -222,36 +252,7 @@ function DrawerNavegador() {
   );
 }
 
-function CalendarioNavegador({navigation}) {
-  return (
-    <Stack.Navigator
-      initialRouteName="Calendario"
-      headerMode="float"
-      screenOptions={{
-        headerTintColor: '#fff',
-        headerStyle: { backgroundColor: colorGaztaroaOscuro },
-        headerTitleStyle: { color: '#fff' },
-        headerLeft: () => (<Icon name="menu" size={28} color='white' onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
-         />),
-      }}
-    >
-      <Stack.Screen
-        name="Calendario1"
-        component={Calendario}
-        options={{
-          title: 'Calendario Gaztaroa',
-        }}
-      />
-      <Stack.Screen
-        name="DetalleExcursion"
-        component={DetalleExcursion}
-        options={{
-          title: 'Detalle Excursión',
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
+
 
 class Campobase extends Component {
   componentDidMount() {
@@ -260,6 +261,7 @@ class Campobase extends Component {
     this.props.fetchComentarios();
     this.props.fetchCabeceras();
     this.props.fetchActividades();
+    this.props.postComentario();
   }
 
   render() {

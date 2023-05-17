@@ -3,6 +3,7 @@ import { ListItem, Avatar } from '@rneui/themed';
 import { SafeAreaView, FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { baseUrl } from '../comun/comun';
+import DetalleExcursionComponent from './DetalleExcursionComponent';
 
 const mapStateToProps = state => {
     return {
@@ -18,18 +19,21 @@ class Calendario extends Component {
 
         const { navigate } = this.props.navigation;    
 
-        const renderCalendarioItem = ({item, index}) => {
+        const renderCalendarioItem = ({ item, index }) => {
+           
             return (
+                
                 <ListItem
-                key={index}
-                onPress={() => navigate('DetalleExcursion', { excursionId: item.id })}
-                bottomDivider>
-                    <Avatar source={{uri: baseUrl + item.imagen}} />
+                    
+                    key={index}
+                    onPress={() => navigate('DetalleExcursion', { excursionId: item.id })}
+                    bottomDivider>
+                    <Avatar source={{ uri: item.imagen }} />
                     <ListItem.Content>
                         <ListItem.Title>{item.nombre}</ListItem.Title>
                         <ListItem.Subtitle>{item.descripcion}</ListItem.Subtitle>
                     </ListItem.Content>
-                </ListItem> 
+                </ListItem>
             );
         };
 
@@ -57,7 +61,6 @@ class Calendario extends Component {
                     data={this.props.excursiones.excursiones}
                     renderItem={renderCalendarioItem} 
                     keyExtractor={item => item.id.toString()}
-
                 />
             </SafeAreaView>
              );

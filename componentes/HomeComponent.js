@@ -64,7 +64,7 @@ function RenderItem(props) {
                 <Card containerStyle={estilos.card} >
                     <View style={estilos.imageContainer}>
                         <Card.Image
-                            source={{uri: baseUrl + item.imagen}}
+                            source={{uri: item.imagen}}
                             style={estilos.image}
                         ></Card.Image>
                         <Text style={estilos.title}>{item.nombre}</Text>

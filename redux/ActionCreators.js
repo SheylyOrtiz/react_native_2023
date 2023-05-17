@@ -1,29 +1,10 @@
 import * as ActionTypes from './ActionTypes';
-import { baseUrl } from '../comun/comun';
+//import { baseUrl } from '../comun/comun';
 import app from '../firebaseConfig';
 import 'firebase/database';
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, push } from "firebase/database";
 
 
-// export const fetchComentarios = () => (dispatch) => {
-//     return fetch(baseUrl + 'comentarios')
-//     .then(response => {
-//         if (response.ok) {
-//           return response;
-//         } else {
-//           var error = new Error('Error ' + response.status + ': ' + response.statusText);
-//           error.response = response;
-//           throw error;
-//         }
-//       },
-//       error => {
-//             var errmess = new Error(error.message);
-//             throw errmess;
-//       })
-//     .then(response => response.json())
-//     .then(comentarios => dispatch(addComentarios(comentarios)))
-//     .catch(error => dispatch(comenrtariosFailed(error.message)));
-// };
 export const fetchComentarios = () => (dispatch) => {
     const database = getDatabase(app);
     const comentariosRef = ref(database, "comentarios");
@@ -45,28 +26,39 @@ export const addComentarios = (comentarios) => ({
     type: ActionTypes.ADD_COMENTARIOS,
     payload: comentarios
 });
-
+// export const postComentario = (comentario) => (dispatch) => {
+//     setTimeout(() => {
+//         dispatch(addComentario(comentario));
+//     }, 2000);
+// };
+export const postComentario = (comentario) => (dispatch) => {
+    try {
+      const database = getDatabase(app); // Obtiene una instancia de Realtime Database
+      const comentariosRef1 = ref(database, "comentarios"); // Obtiene la referencia a la ubicación 'comentarios' en Realtime Database
+      push(comentariosRef1, comentario); // Agrega el comentario a la ubicación 'comentarios'
+      dispatch(addComentario(comentario)); // Dispatch una acción para agregar el comentario al estado de la aplicación
+    } catch (error) {
+      dispatch(comentariosFailed(error.message)); // Dispatch una acción en caso de error
+    }
+ };
+export const addComentario = (comentario) => ({
+    type: ActionTypes.ADD_COMENTARIO,
+    payload: comentario
+});
 export const fetchExcursiones = () => (dispatch) => {
 
     dispatch(excursionesLoading());
 
-    return fetch(baseUrl + 'excursiones')
-    .then(response => {
-        if (response.ok) {
-          return response;
-        } else {
-          var error = new Error('Error ' + response.status + ': ' + response.statusText);
-          error.response = response;
-          throw error;
-        }
-      },
-      error => {
-            var errmess = new Error(error.message);
-            throw errmess;
-      })
-    .then(response => response.json())
-    .then(excursiones => dispatch(addExcursiones(excursiones)))
-    .catch(error => dispatch(excursionesFailed(error.message)));
+    const database = getDatabase(app);
+    const excursionesRef = ref(database, "excursiones");
+  
+    // Suscribirse a los cambios de los datos en tiempo real
+    onValue(excursionesRef, (snapshot) => {
+      const excursiones = snapshot.val();
+      dispatch(addExcursiones(excursiones));
+    }, (error) => {
+      dispatch(excursionesFailed(error.message));
+    });
 };
 
 export const excursionesLoading = () => ({
@@ -87,23 +79,16 @@ export const fetchCabeceras = () => (dispatch) => {
     
     dispatch(cabecerasLoading());
 
-    return fetch(baseUrl + 'cabeceras')
-    .then(response => {
-        if (response.ok) {
-            return response;
-        } else {
-            var error = new Error('Error ' + response.status + ': ' + response.statusText);
-            error.response = response;
-            throw error;
-        }
-        },
-        error => {
-            var errmess = new Error(error.message);
-            throw errmess;
-        })
-    .then(response => response.json())
-    .then(cabeceras => dispatch(addCabeceras(cabeceras)))
-    .catch(error => dispatch(cabecerasFailed(error.message)));
+    const database = getDatabase(app);
+    const cabecerasRef = ref(database, "cabeceras");
+  
+    // Suscribirse a los cambios de los datos en tiempo real
+    onValue(cabecerasRef, (snapshot) => {
+      const cabeceras = snapshot.val();
+      dispatch(addCabeceras(cabeceras));
+    }, (error) => {
+      dispatch(cabecerasFailed(error.message));
+    });
 };
 
 export const cabecerasLoading = () => ({
@@ -124,23 +109,16 @@ export const fetchActividades = () => (dispatch) => {
     
     dispatch(actividadesLoading());
 
-    return fetch(baseUrl + 'actividades')
-    .then(response => {
-        if (response.ok) {
-            return response;
-        } else {
-            var error = new Error('Error ' + response.status + ': ' + response.statusText);
-            error.response = response;
-            throw error;
-        }
-        },
-        error => {
-            var errmess = new Error(error.message);
-            throw errmess;
-        })
-    .then(response => response.json())
-    .then(actividades => dispatch(addActividades(actividades)))
-    .catch(error => dispatch(actividadesFailed(error.message)));
+    const database = getDatabase(app);
+    const actividadesRef = ref(database, "actividades");
+  
+    // Suscribirse a los cambios de los datos en tiempo real
+    onValue(actividadesRef, (snapshot) => {
+      const actividades = snapshot.val();
+      dispatch(addActividades(actividades));
+    }, (error) => {
+      dispatch(actividadesFailed(error.message));
+    });
 };
 
 export const actividadesLoading = () => ({
@@ -156,6 +134,8 @@ export const addActividades = (actividades) => ({
     type: ActionTypes.ADD_ACTIVIDADES,
     payload: actividades
 });
+
+
 export const postFavorito = (excursionId) => (dispatch) => {
     setTimeout(() => {
         dispatch(addFavorito(excursionId));
@@ -165,14 +145,5 @@ export const addFavorito = (excursionId) => ({
     type: ActionTypes.ADD_FAVORITO,
     payload: excursionId
 });
-export const postComentario = (comentario) => (dispatch) => {
-    setTimeout(() => {
-        dispatch(addComentario(comentario));
-    }, 2000);
-};
 
-export const addComentario = (comentario) => ({
-    type: ActionTypes.ADD_COMENTARIO,
-    payload: comentario
-});
    

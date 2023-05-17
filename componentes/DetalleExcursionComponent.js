@@ -1,4 +1,4 @@
-import React, { Component, setState } from 'react';
+import React, { Component, } from 'react';
 import { Text, View, ScrollView, Container} from 'react-native';
 import { Card, Icon } from '@rneui/themed';
 import { connect } from 'react-redux';
@@ -64,7 +64,7 @@ const mapStateToProps = state => {
     return {
     excursiones: state.excursiones,
     comentarios: state.comentarios,
-    favoritos: state.favoritos
+    favoritos: state.favoritos,
     }
 }
 
@@ -157,7 +157,7 @@ function RenderExcursion(props) {
                     <Card containerStyle={estilos.card} >
                         <View style={estilos.imageContainer}>
                             <Card.Image
-                                source={{uri: baseUrl + excursion.imagen}}
+                                source={{uri: excursion.imagen}}
                                 style={estilos.image}
                             ></Card.Image>
                             <Text style={estilos.title}>{excursion.nombre}</Text>
